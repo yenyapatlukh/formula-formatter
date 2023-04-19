@@ -148,7 +148,7 @@
       console.log(textArr);
       textArr.forEach((symbol, i) => {
         if(symbol === '$') {
-          if(i===0 || isAlphaNumeric(textArr[i - 1])) {
+          if(!isAlphaNumeric(textArr[i + 1])) {
             textArr[i] = '{/formula}';
           } else {
             textArr[i] = "{formula}";
