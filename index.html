@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formula Formatter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter Tight', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 20px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    @media screen and (max-width: 600px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      min-width: calc(50vw - 60px);
+    }
+
+    form label {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      font-size: 2em;
+      flex-grow: 1;
+      gap: 20px;
+    }
+
+    textarea {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+
+    .result {
+      width: 100%;
+    }
+
+    .result p {
+      font-size: 2em;
+      margin: 0;
+      margin-bottom: 20px;
+    }
+
+    .result pre {
+      font-size: 1rem;
+      font-family: inherit;
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 20px;
+      overflow: scroll;
+      max-width: calc(50vw - 60px);
+      line-height: 1.5;
+
+    }
+
+    @media screen and (max-width: 600px) {
+      .result pre {
+        max-width: 100%;
+      }
+    }
+      
+
+    button {
+      padding: 20px 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      background-color: #1e1e1e;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .8;
+    }
+
+    footer {
+      padding: 20px;
+      margin-top: 20px;
+      border-top: 1px solid #1e1e1e;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Formula Formatter</h1>
+  </header>
+  <main>
+    <form>
+      <label>
+        <span>Введите ваш текст</span>
+        <textarea name="text" placeholder="Вставьте текст с формулами"></textarea>
+      </label>
+      <button type="submit">Форматировать</button>
+    </form>
+    <div class="result">
+      <p>Здесь будет результат:</p>
+      <pre>Прямо тут</pre>
+    </div>
+  </main>
+  <footer>
+    <p>© with 🖤 from Yen'ka & Pa7lux</p>
+  </footer>
+  <script>
+    const form = document.querySelector('form');
+    const result = document.querySelector('.result pre');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = form.text.value;
+      result.textContent = formatText(text);
+    })
+    
+    function formatText(text) {
+      let textArr = text.split('');
+      console.log(textArr);
+      textArr.forEach((symbol, i) => {
+        if(symbol === '$') {
+          if(i===0 || isAlphaNumeric(textArr[i - 1])) {
+            textArr[i] = '{/formula}';
+          } else {
+            textArr[i] = "{formula}";
+          }
+        }
+      })
+      
+      return textArr.join('');
+    }
+
+    function isAlphaNumeric(str) {
+      var code, i, len;
+      for (i = 0, len = str.length; i < len; i++) {
+        code = str.charCodeAt(i);
+        if (!(code > 47 && code < 58) && // numeric (0-9)
+            !(code > 64 && code < 91) && // upper alpha (A-Z)
+            !(code > 96 && code < 123)) { // lower alpha (a-z)
+          return false;
+        }
+      }
+      return true;
+    };
+    console.log(formatText('Hello $world$!'));
+  </script>
+</body>
+</html>
