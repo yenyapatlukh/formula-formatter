@@ -145,10 +145,12 @@
     
     function formatText(text) {
       let textArr = text.split('');
-      console.log(textArr);
       textArr.forEach((symbol, i) => {
         if(symbol === '$') {
-          if(!isAlphaNumeric(textArr[i + 1])) {
+          if(i >= textArr.length - 1) {
+            textArr[i] = '{/formula}';
+          }
+          else if(i !== 0 && !isAlphaNumeric(textArr[i + 1])) {
             textArr[i] = '{/formula}';
           } else {
             textArr[i] = "{formula}";
@@ -171,7 +173,6 @@
       }
       return true;
     };
-    console.log(formatText('Hello $world$!'));
   </script>
 </body>
 </html>
