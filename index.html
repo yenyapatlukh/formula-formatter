@@ -141,7 +141,7 @@
       e.preventDefault();
       const text = form.text.value;
       result.textContent = formatText(text);
-    }
+    })
     
     function formatText(text) {
       let textArr = text.split('');
@@ -159,7 +159,7 @@
               textArr[i] = "{formula}";
             }
           }
-        }
+        })
       
       return textArr.join('');
     }
