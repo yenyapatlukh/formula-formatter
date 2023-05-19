@@ -154,7 +154,6 @@
             textArr[i] = '{/formula}';
           } else {
             if (symbol === '$$' && textArr[i + 1] === '\\') {
-              // Handle the case of Greek characters
               textArr[i] = symbol;
             } else {
               textArr[i] = "{formula}";
