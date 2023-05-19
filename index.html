@@ -146,20 +146,17 @@
     function formatText(text) {
       let textArr = text.split('');
       textArr.forEach((symbol, i) => {
-        if(symbol === '$' || symbol === '$$') {
+        if(symbol === '$') {
           if(i >= textArr.length - 1) {
             textArr[i] = '{/formula}';
           }
-          else if(!isAlphaNumeric(textArr[i + 1])) {
+          else if(i !== 0 && !isAlphaNumeric(textArr[i + 1])) {
             textArr[i] = '{/formula}';
           } else {
-            if (symbol === '$$' && textArr[i + 1] === '\\') {
-              textArr[i] = symbol;
-            } else {
-              textArr[i] = "{formula}";
-            }
+            textArr[i] = "{formula}";
           }
-        })
+        }
+      })
       
       return textArr.join('');
     }
