@@ -153,10 +153,14 @@
           else if(!isAlphaNumeric(textArr[i + 1])) {
             textArr[i] = '{/formula}';
           } else {
-            textArr[i] = "{formula}";
+            if (symbol === '$$' && textArr[i + 1] === '\\') {
+              // Handle the case of Greek characters
+              textArr[i] = symbol;
+            } else {
+              textArr[i] = "{formula}";
+            }
           }
-        }
-      })
+        })
       
       return textArr.join('');
     }
